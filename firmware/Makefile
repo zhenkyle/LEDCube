@@ -20,7 +20,7 @@
 DEVICE     = atmega328p
 CLOCK      = 16000000
 PROGRAMMER = -c arduino -P /dev/cu.usbserial-1410
-OBJECTS    = main.o
+OBJECTS    = main.o draw.o effect.o font.o gameoflife.o launch_effect.o spi.o usart.o
 #FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
 #Default FUSES for m328p nano
 #FUSES      = -U hfuse:w:0xda:m -U lfuse:w:0xff:m -U efuse:w:0xfd:m
@@ -51,7 +51,7 @@ OBJECTS    = main.o
 # Tune the lines below only if you know what you are doing:
 
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
-COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -std=gnu99
 
 # symbolic targets:
 all:	main.hex
