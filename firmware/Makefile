@@ -19,7 +19,8 @@
 
 DEVICE     = atmega328p
 CLOCK      = 16000000
-PROGRAMMER = -c arduino -P /dev/cu.usbserial-1410
+#PROGRAMMER = -c arduino -P /dev/cu.usbserial-1410
+PROGRAMMER = -c arduino -P /dev/ttyUSB0
 OBJECTS    = main.o draw.o effect.o font.o gameoflife.o launch_effect.o spi.o usart.o
 #FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
 #Default FUSES for m328p nano

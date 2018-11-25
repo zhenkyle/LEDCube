@@ -1,3 +1,4 @@
+
 #include <avr/io.h>
 #include "spi.h"
 #include "pin_defines.h"
@@ -15,6 +16,7 @@ void initSPI(void) {
   /* SPR1 = 0, SPR0=0 default Oscillator Frequency fosc/4 */
   SPCR |= (1 << MSTR);                                  /* clockmaster */
   SPCR |= (1 << SPE);                                        /* enable */
+  SPSR |= (1 << SPI2X);
 }
 
 void SPI_tradeByte(uint8_t byte) {

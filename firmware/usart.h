@@ -6,7 +6,9 @@
 
 // Define USART stuff
 #define FOSC 16000000UL
-#define BAUD 76800UL
+//#define BAUD 76800UL
+#define BAUD 115200UL
+//#define BAUD 38400UL
 
 
 /* Takes the defined BAUD and F_CPU,
