@@ -1,4 +1,5 @@
 */*.elf
 */*.hex
 */*.o
+cube_pc/cube
 .DS_Store

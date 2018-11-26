@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include "cube.h"
 #include "draw.h"
+#include "3d.h"
 #include "draw_3d.h"
 #include "effect.h"
 #include "gameoflife.h"
@@ -17,9 +18,9 @@ int main (int argc, char **argv)
 	cube_init();
 
 	pthread_t cube_thread;
-	int iret, i, x;
+	int i, x;
 
-	iret = pthread_create (&cube_thread, NULL, cube_updater, rs232_cube);
+	pthread_create (&cube_thread, NULL, (void * (*)(void *)) cube_updater, rs232_cube);
 
 
 	while (1)
@@ -55,6 +56,7 @@ int main (int argc, char **argv)
             
         }
 	}
+  return 0; // never get here
 
 }
 

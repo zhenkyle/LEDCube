@@ -1,4 +1,5 @@
 #include "draw_3d.h"
+#include "draw.h"
 #include <math.h>
 
 
@@ -70,7 +71,6 @@ void calculate_cube_corners (vertex pnt[8], vertex center, float size)
 
 void draw_cube_wireframe (vertex pnt[8])
 {
-	int i;
 	
 	// upper "lid"
 	line_3d ((int)pnt[0].x,(int)pnt[0].y,(int)pnt[0].z,(int)pnt[1].x,(int)pnt[1].y,(int)pnt[1].z);

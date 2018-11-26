@@ -68,11 +68,11 @@ const unsigned char paths[44] PROGMEM = {0x07,0x06,0x05,0x04,0x03,0x02,0x01,0x00
 
 void font_getpath (unsigned char path, unsigned char *destination, int length)
 {
-	int i;
-	int offset = 0;
+	//int i;
+	//int offset = 0;
 	
-	if (path == 1)
-		offset=28;
+	//if (path == 1)
+	//	offset=28;
 	
 	//for (i = 0; i < length; i++)
 	//	destination[i] = pgm_read_byte(&paths[i+offset]);
@@ -140,7 +140,7 @@ void font_getchar (char chr, unsigned char dst[5])
 
 void font_getbitmap (char bitmap, unsigned char dst[8])
 {
-	int i;
+	//int i;
 	
         //for (i = 0; i < 8; i++)
 	//	dst[i] = eeprom_read_byte(&bitmaps[bitmap][i]);
@@ -151,6 +151,7 @@ unsigned char font_getbitmappixel ( char bitmap, char x, char y)
 {
 	//unsigned char tmp = eeprom_read_byte(&bitmaps[bitmap][x]);
 	//return (tmp >> y) & 0x01;
+	return 0;
 }
 
 

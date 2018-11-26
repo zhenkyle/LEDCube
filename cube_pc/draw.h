@@ -44,7 +44,7 @@ void box_filled(int x1, int y1, int z1, int x2, int y2, int z2);
 void box_walls(int x1, int y1, int z1, int x2, int y2, int z2);
 void box_wireframe(int x1, int y1, int z1, int x2, int y2, int z2);
 char byteline (int start, int end);
-
+void line_3d (int x1, int y1, int z1, int x2, int y2, int z2);
 void tmp2cube (void);
 void shift (char axis, int direction);
 

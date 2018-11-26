@@ -820,7 +820,7 @@ void effect_z_updown (int iterations, int delay)
 	unsigned char positions[64];
 	unsigned char destinations[64];
 
-	int i,y,move,px;
+	int i,y,move;
 	
 	for (i=0; i<64; i++)
 	{
@@ -1373,8 +1373,7 @@ void effect_rand_patharound (int iterations, int delay)
 
 void effect_pathspiral (int iterations, int delay)
 {
-	int z, i;
-	z = 4;
+	int i;
 	unsigned char path[16];
 	
 	font_getpath(1,path,16);

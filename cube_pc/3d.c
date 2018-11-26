@@ -10,10 +10,11 @@
 void linespin (int iterations, int delay)
 {
 	float top_x, top_y, top_z, bot_x, bot_y, bot_z, sin_base;
-	float center_x, center_y;
+	//float center_x, center_y;
+	float center_x;
 
 	center_x = 4;
-	center_y = 4;
+	//center_y = 4;
 
 	int i, z;
 	for (i=0;i<iterations;i++)
@@ -85,7 +86,8 @@ void sinelines (int iterations, int delay)
 // Display a sine wave running out from the center of the cube.
 void ripples (int iterations, int delay)
 {
-	float origin_x, origin_y, distance, height, ripple_interval;
+//	float origin_x, origin_y, distance, height, ripple_interval;
+	float distance, height, ripple_interval;
 	int x,y,i;
 
 	fill(0x00);

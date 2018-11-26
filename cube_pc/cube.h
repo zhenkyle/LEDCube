@@ -9,8 +9,8 @@ int LED_PORT;
 int LED_RED;
 int LED_GREEN;
 
-volatile unsigned char cube[8][8];
-volatile unsigned char rs232_cube[8][8];
+unsigned char cube[8][8];
+unsigned char rs232_cube[8][8];
 unsigned char fb[8][8];
 
 int tty;
