@@ -590,7 +590,7 @@ void boingboing(uint16_t iterations, int delay, unsigned char mode, unsigned cha
 			delay_ms(delay);
 		} if (drawmode == 0x03) // draw a snake
 		{
-			for (i=7;i>=0;i--)
+			for (i=7;i>0;i--)
 			{
 				snake[i][0] = snake[i-1][0];
 				snake[i][1] = snake[i-1][1];

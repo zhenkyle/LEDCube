@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# script/bootstrap: Resolve all dependencies that the application requires to
+#                   run.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ "$(uname -s)" = "Linux" ] && [ -f "/etc/debian_version" ]; then
+
+  # Install avr-gcc if needed
+  which avr-gcc >/dev/null 2>&1  || {
+    echo "==> Installing Dependencie"
+    sudo apt-get update && sudo apt-get install -y build-essential \
+       gcc-avr gdb-avr avr-libc avrdude avrdude-doc binutils-avr \
+       libpthread-stubs0-dev
+  }
+else
+  echo "Sorry, only support Debain system."
+  exit 1
+fi

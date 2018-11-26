@@ -13,13 +13,13 @@
 
 // Cube buffer
 // Data from this array is loaded onto the cube for each duty cycle
-volatile unsigned char cube[CUBE_SIZE][CUBE_SIZE];
+unsigned char cube[CUBE_SIZE][CUBE_SIZE];
 
 // Framebuffer
 // Animations that take a lot of time to compute are temporarily
 // stored to this array, then loaded into cube[8][8] when the image
 // is ready to be displayed
-volatile unsigned char fb[CUBE_SIZE][CUBE_SIZE];
+unsigned char fb[CUBE_SIZE][CUBE_SIZE];
 
 // Some effects can render on different axis
 // for example send pixels along an axis
