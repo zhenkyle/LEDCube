@@ -16,7 +16,7 @@ void initSPI(void) {
   /* SPR1 = 0, SPR0=0 default Oscillator Frequency fosc/4 */
   SPCR |= (1 << MSTR);                                  /* clockmaster */
   SPCR |= (1 << SPE);                                        /* enable */
-  SPSR |= (1 << SPI2X);
+  SPSR |= (1 << SPI2X);                              /* set fosc/2 SCK */
 }
 
 void SPI_tradeByte(uint8_t byte) {

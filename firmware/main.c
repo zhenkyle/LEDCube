@@ -136,16 +136,16 @@ void initTimer2()
 {
 	// Timer 2
 	// Frame buffer interrupt = clock / prescaler / (OCR2A + 1)
-	// 16000000/256/11 = 563 interrupts per second
+	// 16000000/256/11 = 5681.82 interrupts per second
 	// frame per second = Frame buffer interrup / 8
-	// 563/8 = 70.38 frames per second
+	// 5681.82/8 = 710.23 frames per second
   
     // Reset any PWM configuration that the arduino may have set up automagically!
 	TCCR2A = 0x00;
 	TCCR2B = 0x00;
 
 	TCCR2A |= (0x01 << WGM21); // CTC mode. clear counter on TCNT2 == OCR2A
-	OCR2A = 10; // Interrupt every 25600th cpu cycle ( prescaler * OCR2A)
+	OCR2A = 10; // Interrupt every 2816 cpu cycle ( prescaler * (OCR2A+1) = 256 * 11)
 	TCNT2 = 0x00; // start counting at 0
 	TCCR2B |= (0x01 << CS22) | (0x01 << CS21); // Start the clock with a 256 prescaler
 
