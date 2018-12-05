@@ -174,35 +174,41 @@ unsigned int bootwait (void)
 	// All the LED_PORT... code blinks the red and green status LEDs.
 
 	unsigned int x = 0;
+	int ii = 0;
 	LED_PORT |= (1 << LED_GREEN);
 	while (1)
 	{
         x++; // increment x by one.
-		srand(x); // use counter x as random seed
 		
-		_delay_ms(1000);
 		LED_PORT &= ~ (1 << LED_GREEN); // green off, red on
 		LED_PORT |= (1 << LED_RED);
-		
-		// Listen for button presses and return with the
-		// apropriate number.
-		if (!(BUTTON_PIN & (1 << UART_BTN)))
-			return 2;
 
-		if (!(BUTTON_PIN & (1 << MAIN_BTN)))
-			return 1;
+		for (ii=0; ii<1000; ii++ ) {
+			srand(x); // use counter x as random seed
+			_delay_ms(1);
+			// Listen for button presses and return with the
+			// apropriate number.
+			if (!(BUTTON_PIN & (1 << UART_BTN)))
+				return 2;
+
+			if (!(BUTTON_PIN & (1 << MAIN_BTN)))
+				return 1;
 		
-		_delay_ms(1000);
+		}
 		LED_PORT &= ~ (1 << LED_RED); // red off, green on
 		LED_PORT |= (1 << LED_GREEN);
 		
-		// Same as above. I do it twise because there are two delays
-		// in this loop, used for the red and green led blinking..
-		if (!(BUTTON_PIN & (1 << UART_BTN)))
-			return 2;
+		for (ii=0; ii<1000; ii++ ) {
+			srand(x); // use counter x as random seed
+			_delay_ms(1);
+			// Same as above. I do it twise because there are two delays
+			// in this loop, used for the red and green led blinking..
+			if (!(BUTTON_PIN & (1 << UART_BTN)))
+				return 2;
 
-		if (!(BUTTON_PIN & (1 << MAIN_BTN)))
-			return 1;
+			if (!(BUTTON_PIN & (1 << MAIN_BTN)))
+				return 1;
+		}
 	}
 }
 
