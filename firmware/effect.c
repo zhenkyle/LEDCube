@@ -771,14 +771,7 @@ void effect_axis_updown_randsuspend (char axis, int delay, int sleep, int invert
 	{
 		for (px=0; px<64; px++)
 		{
-			if (positions[px]<destinations[px])
-			{
-				positions[px]++;
-			}
-			if (positions[px]>destinations[px])
-			{
-				positions[px]--;
-			}
+			positions[px]++;
 		}
 		draw_positions_axis (axis, positions,invert);
 		delay_ms(delay);

@@ -73,8 +73,6 @@ void launch_effect (int effect)
 		case 9:
 			effect_axis_updown_randsuspend(AXIS_Z, 550,5000,0);
 			effect_axis_updown_randsuspend(AXIS_Z, 550,5000,1);
-			effect_axis_updown_randsuspend(AXIS_Z, 550,5000,0);
-			effect_axis_updown_randsuspend(AXIS_Z, 550,5000,1);
 			effect_axis_updown_randsuspend(AXIS_X, 550,5000,0);
 			effect_axis_updown_randsuspend(AXIS_X, 550,5000,1);
 			effect_axis_updown_randsuspend(AXIS_Y, 550,5000,0);
