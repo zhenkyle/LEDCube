@@ -73,11 +73,13 @@ all:	main.hex
 flash:	all
 	$(AVRDUDE) -U flash:w:main.hex:i
 
+flash_eeprom: all
+	$(AVRDUDE) -U eeprom:w:eeprom.hex:i
 #fuse:
 #	$(AVRDUDE) $(FUSES)
 
 # Xcode uses the Makefile targets "", "clean" and "install"
-install: flash# fuse
+install: flash flash_eeprom# fuse
 
 # if you use a bootloader, change the command below appropriately:
 load: all
@@ -93,6 +95,8 @@ main.elf: $(OBJECTS)
 main.hex: main.elf
 	rm -f main.hex
 	avr-objcopy -j .text -j .data -O ihex main.elf main.hex
+	avr-objcopy -j .eeprom --set-section-flags=.eeprom="alloc,load" \
+	--change-section-lma .eeprom=0 -O ihex main.elf eeprom.hex
 	avr-size --format=avr --mcu=$(DEVICE) main.elf
 # If you have an EEPROM section, you must also create a hex file for the
 # EEPROM and add it to the "flash" target.

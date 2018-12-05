@@ -16,7 +16,7 @@ fi
 
 if [ ! -f "firmware/main.hex" ]; then
    (cd firmware && make)
-   echo "Note: Use 'make flash' to flash the firmware!"
+   echo "Note: Use 'make flash' to flash the firmware! Maybe need: sudo usermod -aG dailout YOURNAME, and reboot"
 fi
 
 

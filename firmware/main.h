@@ -18,6 +18,7 @@
 #define OE_PORT PORTB
 #define OE_MASK 0x08
 
+void updateCube(void);
 void initLEDs (void);
 void initButtons (void);
 void initTimer2 (void);

@@ -9,6 +9,7 @@
 #include "draw.h"
 #include "spi.h"
 #include "usart.h"
+#include <string.h>
 
 // Main loop
 // the AVR enters this function at boot time
@@ -22,6 +23,9 @@ int main (void)
 	initTimer2();
   	// Inits SPI 
   	initSPI();
+  	// Clear Cube
+  	memset(cube,0x00,64);
+  	updateCube();
 	// Initial Latch
 	LATCH_DDR |= (1 << LATCH);
 	// Inits USART
@@ -95,6 +99,11 @@ int main (void)
 */
 
 ISR(TIMER2_COMPA_vect)
+{
+	updateCube();
+}
+
+void updateCube()
 {
 	int i;
 
