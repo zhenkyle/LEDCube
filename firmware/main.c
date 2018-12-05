@@ -23,9 +23,6 @@ int main (void)
 	initTimer2();
   	// Inits SPI 
   	initSPI();
-  	// Clear Cube
-  	memset(cube,0x00,64);
-  	updateCube();
 	// Initial Latch
 	LATCH_DDR |= (1 << LATCH);
 	// Inits USART
@@ -33,6 +30,9 @@ int main (void)
     // This variable specifies which layer is currently being drawn by the
 	// cube interrupt routine. We assign a value to it to make sure it's not >7.
 	current_layer = 0;	
+
+  	// Clear Cube
+  	clearCube();
 
 	int i;
 	
@@ -123,6 +123,15 @@ void updateCube()
 	current_layer++;
 	if (current_layer == 8)
 		current_layer = 0;
+}
+
+void clearCube()
+{
+	int i;
+  	memset(cube,0x00,64);
+	for (i=0; i<8; i++) {
+		updateCube();
+	}
 }
 
 void initLEDs()

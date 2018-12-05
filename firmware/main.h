@@ -23,6 +23,7 @@ void initLEDs (void);
 void initButtons (void);
 void initTimer2 (void);
 void bootmsg (void);
+void clearCube (void);
 
 volatile unsigned char current_layer;
 volatile unsigned char pgm_mode;
