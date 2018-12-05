@@ -161,7 +161,7 @@ void launch_effect (int effect)
 			break;
 			
 		case 25:
-			effect_wormsqueeze (1, AXIS_Z, -1, 100, 1000);
+			effect_wormsqueeze (2, AXIS_Z, 1, 100, 1000);
 			break;
 		
 		case 26:
