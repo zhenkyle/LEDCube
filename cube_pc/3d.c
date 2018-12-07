@@ -133,7 +133,6 @@ void sidewaves (int iterations, int delay)
 				height = 4+sin(distance/ripple_interval+(float) i/50)*3.6;
 
 				setvoxel(x,y,(int) height);
-				setvoxel(x,y,(int) height);
 					
 			}
 		}

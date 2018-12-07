@@ -25,6 +25,7 @@ int main (int argc, char **argv)
 
 	while (1)
 	{
+		srand(time(NULL));
 		printf("String fly\n");
 		effect_stringfly2("READY?  9876543210");//
 
@@ -53,8 +54,8 @@ int main (int argc, char **argv)
                 setvoxel(rand()%4,rand()%4,rand()%4);//
 
             gol_play(50,1000);
-            
         }
+
 	}
   return 0; // never get here
 
