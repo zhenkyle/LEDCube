@@ -41,6 +41,9 @@ int main (int argc, char **argv)
 		printf("Effect: sinelines\n");
 		sinelines(2000,100);//
 
+		printf("Effect: sinewaves\n");
+		sinewaves(2000,100);//
+
 		printf("Effect: spheremove\n");
 		spheremove(1500,100);//
 

@@ -142,6 +142,32 @@ void sidewaves (int iterations, int delay)
 	}
 }
 
+void sinewaves (int iterations, int delay)
+{
+	float height;
+	int y, i;
+	fill(0x00);
+	for (i =0; i<iterations;i++)
+	{
+		for (y=0;y<32;y++)
+		{
+			height = 3.5 + sin(y/1.7 + (float)i/50)*3.6;
+			if (y<8)
+				setvoxel(0 ,y,(int) height);
+			else if (y < 16)
+				setvoxel(y - 8 ,7,(int) height);
+			else if (y < 24)
+				setvoxel(7,23 - y,(int) height);
+			else
+				setvoxel(31 - y ,0 ,(int) height);
+		}
+
+
+		delay_ms(delay);
+		fill(0x00);
+	}
+}
+
 void spheremove (int iterations, int delay)
 {
 	
