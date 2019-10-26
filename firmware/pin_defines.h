@@ -8,7 +8,6 @@
 #define BUTTON_DDR              DDRD
 
 #define MAIN_BTN                PD2
-#define UART_BTN                PD3
 
 
 // leds 

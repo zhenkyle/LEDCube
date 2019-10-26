@@ -40,8 +40,8 @@ int main (void)
 	// This function serves 3 purposes
 	// 1) We delay starting up any interrupts, as drawing the cube causes a lot
 	//    noise that can confuse the ISP programmer.
-	// 2) Listen for button press. One button means go into uart mode,
-	//    The other means go into autonomous mode and start doing stuff.
+	// 2) Detect mode. MAIN button OFF means go into uart mode,
+	//    MAIN button ON means go into autonomous mode and start doing stuff.
 	// 3) Random seed. The bootwait function counts forever from 0 to 255.
 	//    Whenever you press the button, this counter stops, and the number it
 	//    stopped at is used as a random seed. This ensures true randomness at
@@ -143,9 +143,6 @@ void initLEDs()
 
 void initButtons()
 {
-	BUTTON_DDR &= ~(1 << UART_BTN);  // makes double-sure we're in input mode
-	BUTTON_PORT |= (1 << UART_BTN);  // enables pull-up resistor
-
 	BUTTON_DDR &= ~(1 << MAIN_BTN);  // makes double-sure we're in input mode
 	BUTTON_PORT |= (1 << MAIN_BTN);  // enables pull-up resistor
 }
@@ -171,17 +168,20 @@ void initTimer2()
 }
 
 // Boot wait function
-// This function does 3 things:
-// 1) Delay startup of interrupt. I've had some problems with in circuit
-//    serial programming when the cube was running. I guess switching all
-//    those LEDs on and off generates some noise.
-// 2) Set a random random seed based on the delay between boot time and
-//    the time you press a button.
-// 3) Select mode of operation, autonomous or uart controlled.
+// return 1 for autonomus mode, return 2 for UART mode
+// if it is in autonomus mode, wait for 5 seconds and return
+// if it is in UART mode, wait for 10 seconds to change to automatic mode and
+// generate some random
 unsigned int bootwait (void)
 {
-	// All the LED_PORT... code blinks the red and green status LEDs.
 
+        if (!(BUTTON_PIN & (1 << MAIN_BTN)))
+	{
+        	_delay_ms(5000);
+                return 1;
+	}
+	
+	// All the LED_PORT... code blinks the red and green status LEDs.  
 	unsigned int x = 0;
 	int ii = 0;
 	LED_PORT |= (1 << LED_GREEN);
@@ -197,9 +197,6 @@ unsigned int bootwait (void)
 			_delay_ms(1);
 			// Listen for button presses and return with the
 			// apropriate number.
-			if (!(BUTTON_PIN & (1 << UART_BTN)))
-				return 2;
-
 			if (!(BUTTON_PIN & (1 << MAIN_BTN)))
 				return 1;
 		
@@ -212,12 +209,11 @@ unsigned int bootwait (void)
 			_delay_ms(1);
 			// Same as above. I do it twise because there are two delays
 			// in this loop, used for the red and green led blinking..
-			if (!(BUTTON_PIN & (1 << UART_BTN)))
-				return 2;
-
 			if (!(BUTTON_PIN & (1 << MAIN_BTN)))
 				return 1;
 		}
+		if (x == 5)
+		  return 2;
 	}
 }
 
