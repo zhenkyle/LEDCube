@@ -27,7 +27,7 @@ int main (void)
 	LATCH_DDR |= (1 << LATCH);
 	// Inits USART
   	initUSART();
-    // This variable specifies which layer is currently being drawn by the
+        // This variable specifies which layer is currently being drawn by the
 	// cube interrupt routine. We assign a value to it to make sure it's not >7.
 	current_layer = 0;	
 
@@ -35,18 +35,9 @@ int main (void)
   	clearCube();
 
 	int i;
-	
+	int j;
+
 	// Boot wait
-	// This function serves 3 purposes
-	// 1) We delay starting up any interrupts, as drawing the cube causes a lot
-	//    noise that can confuse the ISP programmer.
-	// 2) Detect mode. MAIN button OFF means go into uart mode,
-	//    MAIN button ON means go into autonomous mode and start doing stuff.
-	// 3) Random seed. The bootwait function counts forever from 0 to 255.
-	//    Whenever you press the button, this counter stops, and the number it
-	//    stopped at is used as a random seed. This ensures true randomness at
-	//    every boot. Without this (or some similar process) the cube would
-	//    produce the same "random" sequence every time
 	i = bootwait();
 
 	// Turn off LEDs
@@ -68,18 +59,17 @@ int main (void)
 	// Do awesome effects. Loop forever.
 	while (1)
 	{
+            if (i==1) {
 		// Show the effects in a predefined order
-		for (i=0; i < EFFECTS_TOTAL; i++)
+		for (j=0; j < EFFECTS_TOTAL; j++)
 		{
 			LED_PORT ^= (1 << LED_PGM);
-			launch_effect(i);
+			launch_effect(j);
 		}
-
-		
+	    } else {
 		// Show the effects in a random order.
-		// Comment the two lines above and uncomment this
-		// if you want the effects in a random order.
-		//launch_effect(rand()%EFFECTS_TOTAL);
+		launch_effect(rand()%EFFECTS_TOTAL);
+	    }
 	}
 
 }
@@ -168,15 +158,25 @@ void initTimer2()
 }
 
 // Boot wait function
-// return 1 for autonomus mode, return 2 for UART mode
-// if it is in autonomus mode, wait for 5 seconds and return
-// if it is in UART mode, wait for 10 seconds to change to automatic mode and
-// generate some random
+// return 1 for automatic mode, return 2 for UART mode
+// 1) if it is in automatic mode, wait for 5 seconds and return.
+//    Delay starting up any interrupts for 5 seconds, as drawing the cube causes a lot
+//    noise that can confuse the ISP programme.
+//    Note in this mode, the LEDCube generate the same "random" sequence every time.
+// 2) if it is in UART mode, wait for 10 seconds to change to automatic mode
+//    * Delay 10 seconds to decrease nosise at startup.
+//    * If we want automatic mode to go into really random mode, we need to generate some
+//      randome seeds for it, we can operate this way:
+//      Turn to UART mode
+//      Turn on electricity
+//      Turn to automatic mode in 10 seconds
+//    * If not receive any operation in 10 seconds, turn to UART mode.
 unsigned int bootwait (void)
 {
 
-        if (!(BUTTON_PIN & (1 << MAIN_BTN)))
+        if ((BUTTON_PIN & (1 << MAIN_BTN))) // No input, PD2 pull-up high
 	{
+                LED_PORT |= (1 << LED_GREEN); // GReen for automatic mode
         	_delay_ms(5000);
                 return 1;
 	}
@@ -184,36 +184,44 @@ unsigned int bootwait (void)
 	// All the LED_PORT... code blinks the red and green status LEDs.  
 	unsigned int x = 0;
 	int ii = 0;
-	LED_PORT |= (1 << LED_GREEN);
 	while (1)
 	{
-        x++; // increment x by one.
+                x++; // increment x by one.
 		
 		LED_PORT &= ~ (1 << LED_GREEN); // green off, red on
 		LED_PORT |= (1 << LED_RED);
 
 		for (ii=0; ii<1000; ii++ ) {
-			srand(x); // use counter x as random seed
 			_delay_ms(1);
 			// Listen for button presses and return with the
 			// apropriate number.
-			if (!(BUTTON_PIN & (1 << MAIN_BTN)))
-				return 1;
+			if ((BUTTON_PIN & (1 << MAIN_BTN))) {
+         			srand(ii); // use ii as random seed
+		                LED_PORT &= ~ (1 << LED_RED);
+                		LED_PORT |= (1 << LED_GREEN); // Green for automatic mode
+			        return 3;
+			}
 		
 		}
 		LED_PORT &= ~ (1 << LED_RED); // red off, green on
 		LED_PORT |= (1 << LED_GREEN);
 		
 		for (ii=0; ii<1000; ii++ ) {
-			srand(x); // use counter x as random seed
 			_delay_ms(1);
 			// Same as above. I do it twise because there are two delays
 			// in this loop, used for the red and green led blinking..
-			if (!(BUTTON_PIN & (1 << MAIN_BTN)))
-				return 1;
+			if ((BUTTON_PIN & (1 << MAIN_BTN))) {
+         			srand(x); // use ii  as random seed
+		                LED_PORT &= ~ (1 << LED_RED);
+                		LED_PORT |= (1 << LED_GREEN); // Green for automatic mode
+			        return 3;
+			}
 		}
-		if (x == 5)
-		  return 2;
+		if (x == 5) {
+		        LED_PORT &= ~ (1 << LED_GREEN);
+	                LED_PORT |= (1 << LED_RED); // RED for USART mode
+			return 2;
+		}
 	}
 }
 
