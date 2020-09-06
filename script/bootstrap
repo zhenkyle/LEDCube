@@ -16,7 +16,14 @@ if [ "$(uname -s)" = "Linux" ] && [ -f "/etc/debian_version" ]; then
        gcc-avr gdb-avr avr-libc avrdude avrdude-doc binutils-avr \
        libpthread-stubs0-dev
   }
+elif [ "$(uname -s)" = "Linux" ] && [ -f "/etc/arch-release" ]; then
+
+  # Install avr-gcc if needed
+  which avr-gcc >/dev/null 2>&1  || {
+    echo "==> Installing Dependencie"
+    sudo pacman -S avr-gcc avr-gdb avr-libc avrdude avr-binutils
+  }
 else
-  echo "Sorry, only support Debain system."
+  echo "Sorry, only support Debain or Archlinux system."
   exit 1
 fi
